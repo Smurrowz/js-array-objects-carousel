@@ -92,7 +92,7 @@ ul {
 .invert{
 	position: absolute;
 	font-size: 1.75rem;
-	bottom: 0;
+	bottom: -200px;
 	left: 50%;
 	transform: translateX(-50%);
 	color: tomato;

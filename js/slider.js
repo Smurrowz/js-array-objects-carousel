@@ -45,6 +45,7 @@ const arrowPrev = document.querySelector('.arrow-prev')
 const arrowNext = document.querySelector('.arrow-next')
 const invert = document.querySelector('.invert')
 const thumbContainer = document.querySelector('.thumbnail-container')
+let indImg = 0
 
 
 
@@ -73,6 +74,7 @@ slides.forEach((el, index, slides) => {
 		divThumb.classList.add('active')
 
 	}
+	divThumb.setAttribute('num', index)
 	wrapperEl.append(li)
 	li.append(img)
 	li.append(div)
@@ -86,21 +88,20 @@ slides.forEach((el, index, slides) => {
 
 arrowPrev.addEventListener('click', goPrev)
 arrowNext.addEventListener('click', goNext)
-let slideAuto =  setInterval(goNext, 3000)
+let slideAuto = setInterval(goNext, 3000)
 
-invert.addEventListener('click', function(){
+invert.addEventListener('click', function () {
 	invert.classList.toggle('active')
-	if(invert.classList.contains('active')){
+	if (invert.classList.contains('active')) {
 		clearInterval(slideAuto)
-		slideAuto = setInterval(goPrev,3000)
+		slideAuto = setInterval(goPrev, 3000)
 		console.log('vai indietro')
-	}else{
+	} else {
 		clearInterval(slideAuto)
-		slideAuto = setInterval(goNext,3000)
+		slideAuto = setInterval(goNext, 3000)
 		console.log('vai avanti')
 	}
 })
-
 
 
 
@@ -117,6 +118,21 @@ wrapperEl.addEventListener('mouseleave', function () {
 	slideAuto = setInterval(goNext, 3000)
 })
 
+for (let i = 0; i < thumbArray.length; i++) {
+
+	thumbArray[i].addEventListener('click', () => {
+		indImg = parseInt(thumbArray[i].getAttribute('num'));
+
+
+		for (let j = 0; j < slidesArray.length; j++) {
+			slidesArray[j].classList.remove('active');
+			thumbArray[j].classList.remove('active');
+		}
+		slidesArray[indImg].classList.add('active');
+		thumbArray[indImg].classList.add('active');
+		currentIndex = indImg
+	});
+}
 
 
 
@@ -132,19 +148,19 @@ function goPrev() {
 		let thumbPrecedente = thumbArray[currentIndex - 1]
 		slidePrecedente.classList.add('active')
 		thumbPrecedente.classList.add('active')
-		
+
 		currentIndex--
 	} else if (currentIndex === 0) {
 		const slideAttiva = slidesArray[currentIndex]
 		const thumbAttiva = thumbArray[currentIndex]
 		slideAttiva.classList.remove('active')
 		thumbAttiva.classList.remove('active')
-		
+
 		const slidePrecedente = slidesArray[slidesArray.length - 1]
 		const thumbPrecedente = thumbArray[slidesArray.length - 1]
 		slidePrecedente.classList.add('active')
 		thumbPrecedente.classList.add('active')
-		
+
 		currentIndex = slidesArray.length - 1
 	}
 }
