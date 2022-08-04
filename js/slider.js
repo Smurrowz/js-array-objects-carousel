@@ -78,8 +78,16 @@ arrowNext.addEventListener('click', goNext)
 let slideAuto =  setInterval(goNext, 3000)
 
 invert.addEventListener('click', function(){
-		stopInterval()
-		setInterval(goPrev,3000)
+	invert.classList.toggle('active')
+	if(invert.classList.contains('active')){
+		clearInterval(slideAuto)
+		slideAuto = setInterval(goPrev,3000)
+		console.log('vai indietro')
+	}else{
+		clearInterval(slideAuto)
+		slideAuto = setInterval(goNext,3000)
+		console.log('vai avanti')
+	}
 })
 
 
@@ -90,15 +98,12 @@ invert.addEventListener('click', function(){
 
 
 
-function stopInterval(){
-	clearInterval(slideAuto)
-}
 
 wrapperEl.addEventListener('mouseenter', function () {
-	stopInterval()
+	clearInterval(slideAuto)
 })
 wrapperEl.addEventListener('mouseleave', function () {
-	stopInterval()
+	clearInterval(slideAuto)
 	slideAuto = setInterval(goNext, 3000)
 })
 
